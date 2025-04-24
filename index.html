@@ -201,6 +201,7 @@
     }
 
     async function lookupArticle() {
+        console.time("lookup");
     const code = document.getElementById("barcode").value.trim();
     if (!code) return alert("Veuillez scanner un code.");
     document.getElementById("error").textContent = "";
@@ -208,6 +209,8 @@
     try {
         const docRef = doc(window.db, "articles", code); // doc ID = BARCODE_REF
         const docSnap = await getDoc(docRef);
+        console.timeEnd("lookup");
+
 
         if (docSnap.exists()) {
             const data = docSnap.data();
