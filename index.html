@@ -95,6 +95,26 @@
             }
         }
     </style>
+    
+    <!-- Firebase SDK -->
+<script type="module">
+  // Import des modules Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+  import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "TON_API_KEY",
+    authDomain: "TON_PROJECT.firebaseapp.com",
+    projectId: "TON_PROJECT",
+    storageBucket: "TON_PROJECT.appspot.com",
+    messagingSenderId: "xxxxxxxxxxx",
+    appId: "xxxxxxxxxxxxxxxxxx"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  window.db = getFirestore(app);
+</script>
+
 </head>
 <body>
     <h1>🏦 Scan Inventaire 🏦</h1>
