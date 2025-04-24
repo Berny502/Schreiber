@@ -96,24 +96,25 @@
         }
     </style>
     
-    <!-- Firebase SDK -->
+<!-- Firebase SDK -->
 <script type="module">
-  // Import des modules Firebase
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
   import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "TON_API_KEY",
-    authDomain: "TON_PROJECT.firebaseapp.com",
-    projectId: "TON_PROJECT",
-    storageBucket: "TON_PROJECT.appspot.com",
-    messagingSenderId: "xxxxxxxxxxx",
-    appId: "xxxxxxxxxxxxxxxxxx"
+    apiKey: "AIzaSyBg13AZqGkIN1VzxmVRNiG36yFHZBmaa8E",
+    authDomain: "inventaire-scan.firebaseapp.com",
+    projectId: "inventaire-scan",
+    storageBucket: "inventaire-scan.firebasestorage.app",
+    messagingSenderId: "949963970242",
+    appId: "1:949963970242:web:09b18683be7e2cf69b8d5b"
   };
 
   const app = initializeApp(firebaseConfig);
-  window.db = getFirestore(app);
+  const db = getFirestore(app);
+  window.db = db;
 </script>
+
 
 </head>
 <body>
