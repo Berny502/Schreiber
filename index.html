@@ -184,26 +184,7 @@
         location.reload();
     }
 
-    function lookupArticle() {
-        const code = document.getElementById("barcode").value.trim();
-        if (!code) return alert("Veuillez scanner un code.");
-        document.getElementById("error").textContent = "";
 
-        fetch(`${API_URL}?barcode=${encodeURIComponent(code)}`)
-            .then(res => {
-                if (!res.ok) throw new Error("Erreur serveur lors de la recherche.");
-                return res.json();
-            })
-            .then(data => {
-                if (data.error) throw new Error(data.error);
-                currentData = data;
-                document.getElementById("ref").textContent = data.REF_STOCK;
-                document.getElementById("desc").textContent = data.DESCRIPTION;
-                document.getElementById("unit").textContent = data.UNITE;
-                document.getElementById("articleInfo").classList.remove("hidden");
-            })
-            .catch(err => document.getElementById("error").textContent = "❌ " + err.message);
-    }
 
     function setMagasin(val, btn) {
         localStorage.setItem("scanner_magasin", val);
@@ -219,6 +200,32 @@
         document.querySelectorAll("#zoneButtons button").forEach(b => b.classList.remove("btn-selected"));
         btn.classList.add("btn-selected");
     }
+
+    async function lookupArticle() {
+    const code = document.getElementById("barcode").value.trim();
+    if (!code) return alert("Veuillez scanner un code.");
+    document.getElementById("error").textContent = "";
+
+    try {
+        const docRef = doc(window.db, "articles", code); // doc ID = BARCODE_REF
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            currentData = data;
+            document.getElementById("ref").textContent = data.REF_STOCK;
+            document.getElementById("desc").textContent = data.DESCRIPTION;
+            document.getElementById("unit").textContent = data.UNITE;
+            document.getElementById("articleInfo").classList.remove("hidden");
+        } else {
+            document.getElementById("error").textContent = "❌ Article non trouvé.";
+        }
+    } catch (err) {
+        console.error("Erreur Firestore :", err);
+        document.getElementById("error").textContent = "❌ Erreur serveur.";
+    }
+}
+
 
     async function saveScan() {
         const user = localStorage.getItem("scanner_user");
